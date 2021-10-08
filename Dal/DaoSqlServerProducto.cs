@@ -45,7 +45,10 @@ namespace Dal
 
                 com.Parameters.Add(parId);
 
-                com.ExecuteNonQuery();
+                if (com.ExecuteNonQuery() < 1)
+                {
+                    throw new DalException("No se ha encontrado el id " + id);
+                }
             }
         }
 
@@ -114,8 +117,11 @@ namespace Dal
                 parCategoriaId.DbType = DbType.Int64;
                 parCategoriaId.Value = producto.Categoria.Id;
                 com.Parameters.Add(parCategoriaId);
-                
-                com.ExecuteNonQuery();
+
+                if (com.ExecuteNonQuery() < 1)
+                {
+                    throw new DalException("No se ha encontrado el producto " + producto.Nombre);
+                }
 
                 return producto;
             }

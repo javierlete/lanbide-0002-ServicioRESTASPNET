@@ -41,7 +41,15 @@ namespace ServicioRESTASPNET
                     }
                     else
                     {
-                        json = JsonConvert.SerializeObject(dao.ObtenerPorId(id));
+                        producto = dao.ObtenerPorId(id);
+
+                        if (producto == null)
+                        {
+                            res.StatusCode = 404;
+                            return;
+                        }
+
+                        json = JsonConvert.SerializeObject(producto);
                     }
                     break;
                 case "POST":
@@ -55,10 +63,26 @@ namespace ServicioRESTASPNET
                     producto = JsonConvert.DeserializeObject<Producto>(new StreamReader(req.InputStream).ReadToEnd());
                     json = JsonConvert.SerializeObject(producto);
 
-                    dao.Modificar(producto);
+                    try
+                    {
+                        dao.Modificar(producto);
+                    }
+                    catch
+                    {
+                        res.StatusCode = 404;
+                        return;
+                    }
                     break;
                 case "DELETE":
-                    dao.Borrar(id);
+                    try
+                    {
+                        dao.Borrar(id);
+                    }
+                    catch
+                    {
+                        res.StatusCode = 404;
+                        return;
+                    }
                     res.StatusCode = 204;
                     break;
             }
