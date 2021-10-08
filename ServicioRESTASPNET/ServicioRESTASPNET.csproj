@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="INSOMNIA\ProductoRestPruebas.json" />
     <None Include="packages.config" />
     <Content Include="ProductosRest.ashx" />
     <None Include="Web.Debug.config">
